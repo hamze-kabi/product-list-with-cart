@@ -27,11 +27,21 @@ body {
   background-color: var(--rose-100);
   font-family: "redhat";
   display: grid;
+  grid-template-areas: 
+    "h1" 
+    "items"
+    "cart"
+    "attribution";
 }
 
 h1 {
   font-family: "redhat";
   font-weight: bold;
+  grid-area: "h1";
+}
+
+.items {
+  grid-area: "items";
 }
 
 @media screen and (width > 375px) {
