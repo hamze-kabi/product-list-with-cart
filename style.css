@@ -32,6 +32,8 @@ body {
     "items"
     "cart"
     "attribution";
+  gap: 1rem;
+  padding: 1rem;
 }
 
 h1 {
@@ -40,11 +42,51 @@ h1 {
   grid-area: "h1";
 }
 
-.items {
+#items {
   grid-area: "items";
+  display: grid;
+  gap: 2rem;
 }
 
-@media screen and (width > 375px) {
+.img {
+  border-radius: 0.5rem;
+}
+
+.add-to-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  background-color: var(--rose-50);
+  margin-left: 5.72rem;
+  border: 1px solid var(--rose-500);
+  border-radius: 2rem;
+  height: 3rem;
+  width: 10rem;
+  translate: 0rem -1.5rem;
+  font-weight:bold;
+}
+
+.add-to-cart::before {
+  content: url("assets/images/icon-add-to-cart.svg");
+  margin-top: 0.4rem;
+}
+
+.category {
+  color: var(--rose-300);
+  margin-top: -1rem;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.price {
+  font-weight: bold;
+  color: var(--red);  
+}
+
+@media screen and (width > 376px) {
   body {
     background-color: brown;
   }  
