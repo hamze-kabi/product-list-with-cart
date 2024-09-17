@@ -53,6 +53,10 @@ h1 {
   border-radius: 0.5rem;
 }
 
+.img-clicked {
+  box-shadow: 0px 0px 0px 5px var(--red);
+}
+
 .add-to-cart {
   display: flex;
   align-items: center;
@@ -67,11 +71,17 @@ h1 {
   width: 10rem;
   translate: 0rem -1.5rem;
   font-weight:bold;
+  transition: border 0.3s, color 0.3s;
 }
 
 .add-to-cart::before {
   content: url("assets/images/icon-add-to-cart.svg");
   margin-top: 0.4rem;
+}
+
+.add-to-cart:hover {
+  border: 1px solid var(--red);
+  color: var(--red);
 }
 
 .category {
