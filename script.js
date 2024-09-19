@@ -85,12 +85,12 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
   addToCart.id = `add-to-cart${i}`;
   item.appendChild(addToCart);
 
-  // creating icon decrement element to serve as border for icon-decrement-quantity.
-  // the icon-decrement-quantity border does not function well
-  const iconDecrementBorder = document.createElement("div");
-  iconDecrementBorder.classList.add("icon-decrement-border");
-  iconDecrementBorder.id = `icon-decrement-border${i}`;
-  item.appendChild(iconDecrementBorder);
+  // // creating icon decrement element to serve as border for icon-decrement-quantity.
+  // // the icon-decrement-quantity border does not function well
+  // const iconDecrementBorder = document.createElement("div");
+  // iconDecrementBorder.classList.add("icon-decrement-border");
+  // iconDecrementBorder.id = `icon-decrement-border${i}`;
+  // item.appendChild(iconDecrementBorder);
 
   // creating category element
   const category = document.createElement("p");
@@ -121,45 +121,57 @@ function loadNewImg(i, dataImg) {
   img.alt = dataImg;
 }
 
+// let clickedStates = {"img": false, "add-to-cart": false, "icon-incremenet": false, "icon-decremenet": false}
+let clickCount = 0;
+
 // images or addtocart when clicked => add box-shadow to image and changes in addtocart
 window.onload = () => {
   document.querySelectorAll(".img").forEach(img => 
-  img.addEventListener("click", imgAddToCartClicked))
+    img.addEventListener("click", function(event) {imgAddToCartClicked(event, clickCount)}))
 
   document.querySelectorAll(".add-to-cart").forEach(img => 
-    img.addEventListener("click", imgAddToCartClicked))
+    img.addEventListener("click", function(event) {imgAddToCartClicked(event, clickCount)}))
+
+  document.querySelectorAll("icon-decrement-quantity").forEach(decrement =>
+    decrement.addEventListener("click", bo)
+  )
 }
 
-function imgAddToCartClicked() {
-  let currentEl = this;
-  if (currentEl.tagName == "IMG") {
-    let siblingEl = this.nextElementSibling;
-    currentEl.classList.add("img-clicked")
-    siblingEl.classList.add("add-to-cart-clicked", "add-to-cart-clicked-before", "add-to-cart-clicked-after")
-    siblingEl.textContent = ""
-    // alert(currentEl)
-    // alert(siblingEl.children[0])
-    // alert(this.nextElementSibling.children[0])
-  } else if (this.tagName == "BUTTON") {
-    let siblingEl = this.previousElementSibling;
-    currentEl.classList.add("add-to-cart-clicked", "add-to-cart-clicked-before", "add-to-cart-clicked-after")
-    currentEl.innerHTML = ""
-    siblingEl.classList.add("img-clicked")
-    alert(currentEl.childNodes[1])
-    // currentEl.children.forEach(el => {alert(el)})
-    // alert(currentEl.children[0])
-    // alert(siblingEl)
-    // alert(currentEl.children[0])
+function bo() {
+  alert(111)
+}
+
+function imgAddToCartClicked(event, clickCount) {
+  clickCount += 1;
+
+  // if < 1 => no effect (if already have effects => omit effects)
+  // if = 1 => add effect & update clickcount
+  // if > 1 => maintain effects & update clickcount
+
+  let img;
+  let button;
+  if (event.currentTarget.tagName == "IMG") {
+    img = event.currentTarget
+    button = img.nextElementSibling
+  } else if (event.currentTarget.tagName == "BUTTON") {
+    button = event.currentTarget
+    img = button.previousElementSibling
   }
+  img.classList.add("img-clicked")
+  button.classList.add("add-to-cart-clicked", "icon-decrement-quantity", "icon-increment-quantity")
+  button.innerHTML = clickCount;
+
+  // let currentEl = event.currentTarget;
+  // if (currentEl.tagName == "IMG") {
+  //   let siblingEl = currentEl.nextElementSibling;
+  //   currentEl.classList.add("img-clicked")
+  //   siblingEl.classList.add("add-to-cart-clicked", "icon-decrement-quantity", "icon-increment-quantity")
+  //   siblingEl.innerHTML = ""
+  // } else if (currentEl.tagName == "BUTTON") {
+  //   let siblingEl = currentEl.previousElementSibling;
+  //   currentEl.classList.add("add-to-cart-clicked", "icon-decrement-quantity", "icon-increment-quantity")
+  //   currentEl.innerHTML = ""
+  //   siblingEl.classList.add("img-clicked")
+  // }
 }
 
-// ---------------------------------------------------------------------------------------------------------------
-// document.querySelectorAll(".img").forEach(img => console.log(img.src))
-// adding click event to img
-// document.addEventListener("DOMContentLoaded", () => {
-//   document.querySelectorAll(".img").forEach(img => console.log(img.src))
-// });
-
-
-// document.querySelectorAll(".img").forEach(img => img.addEventListener("click", function() {alert(11)}))
-// document.getElementById("img1").addEventListener("click", function() {alert(11)})

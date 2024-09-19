@@ -5,15 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script>
-    function z() {
-      let a = 1;
-      if (1==1) {
-        let b = 2;
-        alert(a)
-        alert(b)
-      }
+    let vv = 22;
+    window.addEventListener("load", function() {func(vv)})
+
+    function func(inp){
+      alert(inp)
     }
-    z()
+    // window.onload = () => {
+    //   let yo = 1111;
+    //   document.querySelector("body").addEventListener("click", function(yo) {
+    //     alert(22)
+    //     func(yo);
+    //   });
+    // }
+
+    // function func(yo) {
+    //   alert(33)
+    //   alert(yo);
+    // }
+
   </script>
 </head>
 <body>
