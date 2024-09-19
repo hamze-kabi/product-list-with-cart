@@ -51,10 +51,11 @@ h1 {
 
 .img {
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .img-clicked {
-  box-shadow: 0px 0px 0px 5px var(--red);
+  box-shadow: 0px 0px 0px 2px var(--red);
 }
 
 .add-to-cart {
@@ -63,7 +64,6 @@ h1 {
   justify-content: center;
   gap: 0.7rem;
   background-color: var(--rose-50);
-  /* margin-left: 5.72rem; */
   margin: 0rem auto 0rem auto;
   border: 1px solid var(--rose-500);
   border-radius: 2rem;
@@ -72,6 +72,7 @@ h1 {
   translate: 0rem -1.5rem;
   font-weight:bold;
   transition: border 0.3s, color 0.3s;
+  cursor: pointer;
 }
 
 .add-to-cart::before {
@@ -82,6 +83,35 @@ h1 {
 .add-to-cart:hover {
   border: 1px solid var(--red);
   color: var(--red);
+}
+
+.add-to-cart-clicked {
+  background-color: var(--red);
+}
+
+.add-to-cart-clicked-after::after {
+  content: url("assets/images/icon-increment-quantity.svg");
+  width: 1.4rem;
+  border: 1px solid white;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: 0.4rem;
+}
+
+.add-to-cart-clicked-before::before {
+  content: url("assets/images/icon-decrement-quantity.svg");
+  margin-bottom: 0.7rem;
+  margin-left: 0.8rem;
+}
+
+.icon-decrement-border {
+  width: 1.4rem;
+  height: 1.6rem;
+  border: 1px solid white;
+  border-radius: 50%;
+  position: absolute;
+  margin: -3.7rem 0 0rem 6.4rem;
+  display: block;
 }
 
 .category {

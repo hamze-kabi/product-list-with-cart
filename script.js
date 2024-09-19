@@ -85,6 +85,13 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
   addToCart.id = `add-to-cart${i}`;
   item.appendChild(addToCart);
 
+  // creating icon decrement element to serve as border for icon-decrement-quantity.
+  // the icon-decrement-quantity border does not function well
+  const iconDecrementBorder = document.createElement("div");
+  iconDecrementBorder.classList.add("icon-decrement-border");
+  iconDecrementBorder.id = `icon-decrement-border${i}`;
+  item.appendChild(iconDecrementBorder);
+
   // creating category element
   const category = document.createElement("p");
   category.innerHTML = dataCategory;
@@ -114,8 +121,45 @@ function loadNewImg(i, dataImg) {
   img.alt = dataImg;
 }
 
+// images or addtocart when clicked => add box-shadow to image and changes in addtocart
+window.onload = () => {
+  document.querySelectorAll(".img").forEach(img => 
+  img.addEventListener("click", imgAddToCartClicked))
 
+  document.querySelectorAll(".add-to-cart").forEach(img => 
+    img.addEventListener("click", imgAddToCartClicked))
+}
+
+function imgAddToCartClicked() {
+  let currentEl = this;
+  if (currentEl.tagName == "IMG") {
+    let siblingEl = this.nextElementSibling;
+    currentEl.classList.add("img-clicked")
+    siblingEl.classList.add("add-to-cart-clicked", "add-to-cart-clicked-before", "add-to-cart-clicked-after")
+    siblingEl.textContent = ""
+    // alert(currentEl)
+    // alert(siblingEl.children[0])
+    // alert(this.nextElementSibling.children[0])
+  } else if (this.tagName == "BUTTON") {
+    let siblingEl = this.previousElementSibling;
+    currentEl.classList.add("add-to-cart-clicked", "add-to-cart-clicked-before", "add-to-cart-clicked-after")
+    currentEl.innerHTML = ""
+    siblingEl.classList.add("img-clicked")
+    alert(currentEl.childNodes[1])
+    // currentEl.children.forEach(el => {alert(el)})
+    // alert(currentEl.children[0])
+    // alert(siblingEl)
+    // alert(currentEl.children[0])
+  }
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// document.querySelectorAll(".img").forEach(img => console.log(img.src))
 // adding click event to img
-document.querySelectorAll(".img").forEach(img =>
-  img.addEventListener("click", img.classList.add(".img-clicked"))
-)
+// document.addEventListener("DOMContentLoaded", () => {
+//   document.querySelectorAll(".img").forEach(img => console.log(img.src))
+// });
+
+
+// document.querySelectorAll(".img").forEach(img => img.addEventListener("click", function() {alert(11)}))
+// document.getElementById("img1").addEventListener("click", function() {alert(11)})
