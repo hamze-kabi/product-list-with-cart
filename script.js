@@ -80,17 +80,34 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
 
   // creating add to cart button
   const addToCart = document.createElement("button");
-  addToCart.innerHTML = "Add to Cart";
   addToCart.classList.add("add-to-cart");
   addToCart.id = `add-to-cart${i}`;
   item.appendChild(addToCart);
 
-  // // creating icon decrement element to serve as border for icon-decrement-quantity.
-  // // the icon-decrement-quantity border does not function well
-  // const iconDecrementBorder = document.createElement("div");
-  // iconDecrementBorder.classList.add("icon-decrement-border");
-  // iconDecrementBorder.id = `icon-decrement-border${i}`;
-  // item.appendChild(iconDecrementBorder);
+  // creating icon add to cart
+  const iconAddToCart = document.createElement("div");
+  iconAddToCart.classList.add("icon-add-to-cart");
+  iconAddToCart.id = `icon-add-to-cart${i}`;
+  addToCart.appendChild(iconAddToCart);
+
+  // creating icon decrement quantity
+  const iconDecrementQuantity = document.createElement("div");
+  iconDecrementQuantity.classList.add("icon-decrement-quantity");
+  iconDecrementQuantity.id = `icon-decrement-quantity${i}`;
+  addToCart.appendChild(iconDecrementQuantity);
+
+  // creating add to cart p element
+  const addToCartText = document.createElement("p");
+  addToCartText.classList.add("add-to-cart-text");
+  addToCartText.id = `add-to-cart-text${i}`;
+  addToCartText.textContent = "Add to Cart";
+  addToCart.appendChild(addToCartText);
+
+  // creating icon increment quantity
+  const iconIncrementQuantity = document.createElement("div");
+  iconIncrementQuantity.classList.add("icon-increment-quantity");
+  iconIncrementQuantity.id = `icon-increment-quantity${i}`;
+  addToCart.appendChild(iconIncrementQuantity);
 
   // creating category element
   const category = document.createElement("p");
