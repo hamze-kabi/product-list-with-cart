@@ -30,7 +30,7 @@ body {
   grid-template-areas: 
     "h1" 
     "items"
-    "cart"
+    "cart-panel"
     "attribution";
   row-gap: 1rem;
   column-gap: 2rem;
@@ -75,6 +75,16 @@ h1 {
   cursor: pointer;
 }
 
+.add-to-cart-hover:hover {
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.add-to-cart-clicked {
+  background-color: var(--red);
+  color: white;
+}
+
 .icon-add-to-cart {
   content: url("assets/images/icon-add-to-cart.svg");
 }
@@ -87,10 +97,13 @@ h1 {
   border: 1px solid white;
   border-radius: 50%;
   display: none;
+  margin-left: 0.7rem;
+  margin-right: auto;
+  scale: 0.9;
 }
 
-.add-to-cart-text {
-  /* display: none; */
+.add-to-cart-text-clicked {
+  color: white;
 }
 
 .icon-increment-quantity {
@@ -101,23 +114,50 @@ h1 {
   border: 1px solid white;
   border-radius: 50%;
   display: none;
+  margin-right: 0.7rem;
+  margin-left: auto;
+  scale: 0.9;
 }
+
+
+.cart-panel svg {
+  margin: auto;
+}
+
+.cart-panel h3 {
+  color: var(--red);
+  margin-bottom: 2rem;
+}
+
+#added-items {
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--rose-500);
+}
+
+
+/* .add-to-cart:active > .icon-decrement-quantity, .add-to-cart:active > .icon-increment-quantity{
+  display:block;
+}
+
+.add-to-cart:visited > .icon-add-to-cart {
+  display: none;
+}  */
+
+
+/* ------------------------------------------------------------- */
+
+
+
+/* ------------------------------------------------------------- */
+
 
 /* .add-to-cart::before {
   content: url("assets/images/icon-add-to-cart.svg");
   margin-top: 0.4rem;
 } */
 
-.add-to-cart:hover {
-  border: 1px solid var(--red);
-  color: var(--red);
-}
 
-.add-to-cart-clicked {
-  background-color: var(--red);
-  justify-content: space-around;
-  color: white;
-}
 
 /* .icon-increment-quantity::after {
   content: url("assets/images/icon-increment-quantity.svg");
@@ -162,28 +202,70 @@ h1 {
   color: var(--red);  
 }
 
-#cart {
+.cart-panel {
   background-color: var(--rose-50);
   padding: 1rem;
-  grid-area: cart;
+  grid-area: cart-panel;
   border-radius: 1rem;
   height: fit-content;
   position: sticky;
   top: 1rem;
 }
 
-#cart h3 {
+#cart-panel h3 {
   color: var(--red);
 }
 
-#cart svg {
+#cart-panel svg {
   margin: auto;
   margin: 2rem auto 1.5rem auto;
 }
 
-#cart p {
+#cart-panel p {
   text-align: center;
   color: var(--rose-400);
+}
+
+.item-row {
+  display: grid;
+  grid-template-areas: 
+    "name-part name-part name-part remove-item"
+    "how-many-part unit-price-part total-price-part remove-item";
+  grid-template-columns: repeat(3, 1fr) 0.5fr;
+}
+
+.name-part {
+  grid-area: name-part;
+  color: black;
+  font-weight: bold;
+  text-align: left;
+}
+
+.how-many-part {
+  grid-area: how-many-part;
+  color: var(--red);
+  font-weight: bold;
+  text-align: left;
+}
+
+.unit-price-part {
+  grid-area: unit-price-part;
+  text-align: left;
+}
+
+.total-price-part {
+  grid-area: total-price-part;
+  font-weight: bold;
+  text-align: left;
+}
+
+.remove-item {
+  grid-area: remove-item;
+  border: 1px solid var(--rose-300);
+  border-radius: 50%;
+  padding: 0.1rem;
+  align-self: center;
+  margin-left: auto;
 }
 
 .attribution {
@@ -195,7 +277,7 @@ h1 {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 
     "h1 h1 h1"
-    "items items cart"
+    "items items cart-panel"
     "attribution attribution attribution";
   }
   #items {
@@ -208,7 +290,7 @@ h1 {
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas: 
     "h1 h1 h1 h1"
-    "items items items cart"
+    "items items items cart-panel"
     "attribution attribution attribution attribution";
   }
   #items {

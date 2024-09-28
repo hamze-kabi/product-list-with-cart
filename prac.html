@@ -1,31 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script>
-    let vv = 22;
-    window.addEventListener("load", function() {func(vv)})
-
-    function func(inp){
-      alert(inp)
-    }
-    // window.onload = () => {
-    //   let yo = 1111;
-    //   document.querySelector("body").addEventListener("click", function(yo) {
-    //     alert(22)
-    //     func(yo);
-    //   });
-    // }
-
-    // function func(yo) {
-    //   alert(33)
-    //   alert(yo);
-    // }
-
-  </script>
 </head>
 <body>
+    <div id="a">
+        aaa
+        <div class="b">bbb</div>
+    </div>
+    <script>
+        console.log(document.getElementById("a").querySelector(".b"))
+    </script>
 </body>
 </html>
