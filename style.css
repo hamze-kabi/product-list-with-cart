@@ -230,7 +230,8 @@ h1 {
   display: grid;
   grid-template-areas: 
     "name-part name-part name-part remove-item"
-    "how-many-part unit-price-part total-price-part remove-item";
+    "how-many-part unit-price-part total-price-part remove-item"
+    "hrEl hrEl hrEl hrEl";
   grid-template-columns: repeat(3, 1fr) 0.5fr;
 }
 
@@ -266,6 +267,11 @@ h1 {
   padding: 0.1rem;
   align-self: center;
   margin-left: auto;
+}
+
+.hrEl {
+  grid-area: hrEl;
+  margin: 0.3rem 0 0.3rem 0;
 }
 
 .attribution {

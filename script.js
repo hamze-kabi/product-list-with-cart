@@ -141,18 +141,17 @@ function loadNewImg(i, dataImg) {
 }
 
 
-let yolo = 2;
 window.onload = function() {
   // using this code to add hover effect to .add-to-cart (instead of using css), so that it can be easily removed later
   document.querySelectorAll(".add-to-cart").forEach(el => el.classList.add("add-to-cart-hover"))
 
   // a function that contains all eventlisteners
-  eventListenerFunc(yolo);
+  eventListenerFunc();
 }
 
 
 
-function eventListenerFunc(yolo) {
+function eventListenerFunc() {
   // click listener for .add-to-cart button
   document.querySelectorAll(".add-to-cart").forEach(addToCart => addToCart.addEventListener("click", function(event) {
     event.stopPropagation()
@@ -196,6 +195,8 @@ function iconIncrementChanger(increment) {
   let temp = parseInt(addToCartText.innerHTML, 10)
   temp += 1
   addToCartText.innerHTML = temp
+  const addToCart = increment.parentElement
+  cartPanelUpdater(addToCart)
 }
 
 
@@ -204,12 +205,13 @@ function iconDecrementChanger(decrement) {
   let temp = parseInt(addToCartText.innerHTML, 10)
   temp -= 1
   addToCartText.innerHTML = temp    
+  const addToCart = decrement.parentElement
 
   if (addToCartText.innerHTML == 0) {
     // reverts .add-to-cart style and content to its original form    
-    const addToCart = decrement.parentElement
     addToCartRevert(addToCart)
   }
+  cartPanelUpdater(addToCart)
 }
 
 function addToCartRevert(addToCart) {
@@ -251,6 +253,25 @@ function cartItemRowAdder(addToCart) {
     addedItems.innerHTML = ""
   }
 
+  // addedItems constains several item-row
+  // each item-row has a p tag containing name of it: .name-part
+  // see if there is 'name' in .name-part s
+  // if there is that .name-part gets updated
+  // console.log(Array.from(addedItems.children).forEach(el => console.log(el.querySelector(".name-part").innerHTML)))
+  if (howMany == "2") {
+    Array.from(addedItems.children).forEach(el => {
+      console.log(el.querySelector(".name-part").innerHTML)
+        console.log(name)
+        if (el.querySelector(".name-part").innerHTML == name) {
+          alert(111)
+        }}
+    )  
+  }
+
+    // if (parseInt(howMany, 10) > 1) {
+  //   Array.from(addedItems.children).forEach(el => console.log(el.querySelectorAll(".name-part")))
+  // }
+
   // parent element of details of added item
   let itemRow = document.createElement("div")
   itemRow.classList.add("item-row")
@@ -282,6 +303,30 @@ function cartItemRowAdder(addToCart) {
   removeItem.data = "assets/images/icon-remove-item.svg"
   removeItem.type = "image/svg+xml"
   itemRow.appendChild(removeItem)
+
+  const hrEl = document.createElement("hr")
+  hrEl.classList.add("hrEl")
+  itemRow.appendChild(hrEl)
+
+
+  // checking if the item-row is already present
+  // let li = []
+  // Array.from(document.getElementById("added-items").children).forEach(el => 
+  //   li.push(el.querySelector(".name-part").innerHTML)
+  // )
+  // console.log(li.includes(namePart.innerHTML))
+  // console.log(li)
+  // console.log(namePart.innerText)
+  // console.log(namePart)
+  
+  // let temp3 = temp2.querySelector(".name-part")
+  // console.log(temp2.querySelectorAll(".name-part"))
+  // let a = document.getElementById("added-items")
+  // Array.from(a.children).forEach(el => 
+  //   Array.from(el.querySelectorAll(".name-part")).forEach(ell => console.log(ell.innerHTML))
+  // )
+
+  // console.log((a.children).forEach(el => console.log(el)))
 }
 
 
