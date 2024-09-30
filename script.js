@@ -187,7 +187,7 @@ function iconIncrementChanger(increment) {
   let addToCartText = increment.previousSibling
   addToCartText.innerHTML = parseInt(addToCartText.innerHTML, 10) + 1
   const addToCart = increment.parentElement
-  cartPanelUpdater(addToCart)
+  cartPanelUpdater(addToCart, true, false)
 }
 
 function iconDecrementChanger(decrement) {
@@ -199,7 +199,7 @@ function iconDecrementChanger(decrement) {
     // reverts .add-to-cart style and content to its original form    
     addToCartRevert(addToCart, false)
   }
-  cartPanelUpdater(addToCart, false)
+  cartPanelUpdater(addToCart, false, true)
 }
 
 function addToCartRevert(addToCart) {
@@ -214,75 +214,84 @@ function addToCartRevert(addToCart) {
   addToCartText.innerHTML = "Add to Cart"
 }
 
-function cartPanelUpdater(addToCart, add=true) {
+// increment and decrement arguments show if increment or decrement icons were clicked or not
+function cartPanelUpdater(addToCart, increment=false, decrement=false) {
   let cartPanel = document.querySelector(".cart-panel")
   // updating value of number of h3
   let wholeQuantity = document.getElementById("quantity-whole")
-  if (add) {
-    wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) + 1
+  if (!decrement) {
+    wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) + 1        
   } else {
-    wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) - 1
+    wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) - 1    
   }
 
-  if (parseInt(wholeQuantity.innerHTML, 10) == 0) {
-    cartPanel.querySelector("svg").style.display = "block"
-    document.getElementById("added-items").innerHTML = "Your added items will appear here"
-  } else if (parseInt(wholeQuantity.innerHTML, 10) == 1) {
+  if (!decrement && parseInt(wholeQuantity.innerHTML, 10) == 1) {
     cartPanel.querySelector("svg").style.display = "none"
     document.getElementById("added-items").innerHTML = ""
+  } else if (decrement && parseInt(wholeQuantity.innerHTML, 10) == 0) {
+    cartPanel.querySelector("svg").style.display = "block"
+    document.getElementById("added-items").innerHTML = "Your added items will appear here"
   }
-  if (parseInt(addToCart.querySelector(".add-to-cart-text").innerHTML, 10) > 1) {
-    cartItemRowAdder(addToCart, false)
-    return
+
+  if (!increment && !decrement) {
+    cartItemRowAdder(addToCart)
+  } else if (increment) {
+    cartItemRowUpdater(addToCart, "increment")
+  } else if (decrement) {
+    cartItemRowUpdater(addToCart, "decrement")
   }
-  cartItemRowAdder(addToCart)
 }
 
-function cartItemRowAdder(addToCart, addRow=true) {
+function cartItemRowAdder(addToCart) {
   let addedItems = document.getElementById("added-items")
   const name = (addToCart.nextSibling.nextSibling).innerHTML
   const price = (addToCart.nextSibling.nextSibling.nextSibling).innerHTML
   const howMany = (addToCart.querySelector(".add-to-cart-text")).innerHTML
 
-  // console.log(addedItems.children)
-  if (addRow) {
-    // parent element of details of added item
-    let itemRow = document.createElement("div")
-    itemRow.classList.add("item-row")
-    addedItems.appendChild(itemRow)
-    
-    let namePart = document.createElement("p")
-    namePart.classList.add("name-part")
-    namePart.innerHTML = name
-    itemRow.appendChild(namePart)
+  // parent element of details of added item
+  let itemRow = document.createElement("div")
+  itemRow.classList.add("item-row")
+  addedItems.appendChild(itemRow)
+  
+  let namePart = document.createElement("p")
+  namePart.classList.add("name-part")
+  namePart.innerHTML = name
+  itemRow.appendChild(namePart)
 
-    let howManyPart = document.createElement("p")
-    howManyPart.classList.add("how-many-part")
-    howManyPart.innerHTML = `${howMany}x`
-    itemRow.appendChild(howManyPart)
+  let howManyPart = document.createElement("p")
+  howManyPart.classList.add("how-many-part")
+  howManyPart.innerHTML = `${howMany}x`
+  itemRow.appendChild(howManyPart)
 
-    let unitPricePart = document.createElement("p")
-    unitPricePart.classList.add("unit-price-part")
-    unitPricePart.innerHTML = `@${price}`
-    itemRow.appendChild(unitPricePart)
+  let unitPricePart = document.createElement("p")
+  unitPricePart.classList.add("unit-price-part")
+  unitPricePart.innerHTML = `@${price}`
+  itemRow.appendChild(unitPricePart)
 
-    let totalPricePart = document.createElement("p")
-    totalPricePart.classList.add("total-price-part")
-    let newPrice = price.replace("$", "")
-    totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`
-    itemRow.appendChild(totalPricePart)
+  let totalPricePart = document.createElement("p")
+  totalPricePart.classList.add("total-price-part")
+  let newPrice = price.replace("$", "")
+  totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`
+  itemRow.appendChild(totalPricePart)
 
-    let removeItem = document.createElement("object")
-    removeItem.classList.add("remove-item")
-    removeItem.data = "assets/images/icon-remove-item.svg"
-    removeItem.type = "image/svg+xml"
-    itemRow.appendChild(removeItem)
+  let removeItem = document.createElement("object")
+  removeItem.classList.add("remove-item")
+  removeItem.data = "assets/images/icon-remove-item.svg"
+  removeItem.type = "image/svg+xml"
+  itemRow.appendChild(removeItem)
 
-    const hrEl = document.createElement("hr")
-    hrEl.classList.add("hrEl")
-    itemRow.appendChild(hrEl)
-  } else {
-    // find item row that its namepart is similar to name and update it
+  const hrEl = document.createElement("hr")
+  hrEl.classList.add("hrEl")
+  itemRow.appendChild(hrEl)
+}
+
+function cartItemRowUpdater(addToCart, act) {
+  let addedItems = document.getElementById("added-items")
+  const name = (addToCart.nextSibling.nextSibling).innerHTML
+  const price = (addToCart.nextSibling.nextSibling.nextSibling).innerHTML
+  const howMany = (addToCart.querySelector(".add-to-cart-text")).innerHTML
+
+  if (act == "increment") {
     Array.from(addedItems.children).forEach(el => {
       if (el.querySelector(".name-part").innerHTML == name) {
         let howManyPart = el.querySelector(".how-many-part")
@@ -293,8 +302,81 @@ function cartItemRowAdder(addToCart, addRow=true) {
         totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`    
       }
     })
+  } else if (act == "decrement") {
+    Array.from(addedItems.children).forEach(el => {
+      if (el.querySelector(".name-part").innerHTML == name) {
+        let howManyPart = el.querySelector(".how-many-part")
+        howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) - 1 + "x"
+
+        let totalPricePart = el.querySelector(".total-price-part")
+        let newPrice = price.replace("$", "")
+        totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`            
+      }
+    })
   }
 }
+
+/*
+ else if (act == "decrement") {
+        alert(2222)
+        Array.from(addedItems.children).forEach(el => {
+          if (el.querySelector(".name-part").innerHTML == name) {
+            let howManyPart = el.querySelector(".how-many-part")
+            howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) - 1 + "x"
+    
+            let totalPricePart = el.querySelector(".total-price-part")
+            let newPrice = price.replace("$", "")
+            totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`            
+          }
+        })
+      }
+    })
+*/
+
+  // } else {
+  //   // find item row that its namepart is similar to name and update it
+  //   Array.from(addedItems.children).forEach(el => {
+  //     if (el.querySelector(".name-part").innerHTML == name) {
+  //       let howManyPart = el.querySelector(".how-many-part")
+  //       howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) + 1 + "x"
+
+  //       let totalPricePart = el.querySelector(".total-price-part")
+  //       let newPrice = price.replace("$", "")
+  //       totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`    
+  //     }
+  //   })
+  // }
+
+  // if (parseInt(wholeQuantity.innerHTML, 10) == 0) {
+  //   cartPanel.querySelector("svg").style.display = "block"
+  //   document.getElementById("added-items").innerHTML = "Your added items will appear here"
+  // } else if (parseInt(wholeQuantity.innerHTML, 10) == 1 && oldWholeQuantity == "0") {
+  //   cartPanel.querySelector("svg").style.display = "none"
+  //   document.getElementById("added-items").innerHTML = ""
+  // }
+
+  // let oldWholeQuantity = wholeQuantity.innerHTML  // for checking if svg and sentencce of added-items need to be removed or not
+  // if (add) {
+  //   wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) + 1
+  // } else {
+  //   wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) - 1
+  // }
+
+  // if (cartPanel.querySelector("svg").style.display == "block" && parseInt(wholeQuantity.innerHTML, 10) > 0) {
+  //   cartPanel.querySelector("svg").style.display = "none"
+  //   document.getElementById("added-items").innerHTML = ""    
+  // } else if (cartPanel.querySelector("svg").style.display == "none" && parseInt(wholeQuantity.innerHTML, 10) == 0) {
+  //   cartPanel.querySelector("svg").style.display = "block"
+  //   document.getElementById("added-items").innerHTML = "Your added items will appear here"
+  // }
+  // if (parseInt(wholeQuantity.innerHTML, 10) == 0) {
+  //   cartPanel.querySelector("svg").style.display = "block"
+  //   document.getElementById("added-items").innerHTML = "Your added items will appear here"
+  // } else if (parseInt(wholeQuantity.innerHTML, 10) == 1 && oldWholeQuantity == "0") {
+  //   cartPanel.querySelector("svg").style.display = "none"
+  //   document.getElementById("added-items").innerHTML = ""
+  // }
+
 
 // issues to solve
 /*
