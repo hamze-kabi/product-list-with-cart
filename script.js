@@ -224,16 +224,68 @@ function cartPanelUpdater(addToCart, add=true) {
     wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) - 1
   }
 
-  if (parseInt(wholeQuantity.innerHTML, 10) > 0) {
+  if (parseInt(wholeQuantity.innerHTML, 10) == 0) {
+    cartPanel.querySelector("svg").style.display = "block"
+    document.getElementById("added-items").innerHTML = "Your added items will appear here"
+  } else if (parseInt(wholeQuantity.innerHTML, 10) == 1) {
     cartPanel.querySelector("svg").style.display = "none"
     document.getElementById("added-items").innerHTML = ""
-  } else {
-    cartPanel.querySelector("svg").style.display = "block"
-      document.getElementById("added-items").innerHTML = "Your added items will appear here"
+  }
+  if (parseInt(addToCart.querySelector(".add-to-cart-text").innerHTML, 10) > 1) {
+    cartItemRowAdder(addToCart, false)
+    return
   }
   cartItemRowAdder(addToCart)
 }
 
+function cartItemRowAdder(addToCart, addRow=true) {
+  let addedItems = document.getElementById("added-items")
+  const name = (addToCart.nextSibling.nextSibling).innerHTML
+  const price = (addToCart.nextSibling.nextSibling.nextSibling).innerHTML
+  const howMany = (addToCart.querySelector(".add-to-cart-text")).innerHTML
+
+  // console.log(addedItems.children)
+  if (addRow) {
+    // parent element of details of added item
+    let itemRow = document.createElement("div")
+    itemRow.classList.add("item-row")
+    addedItems.appendChild(itemRow)
+    
+    let namePart = document.createElement("p")
+    namePart.classList.add("name-part")
+    namePart.innerHTML = name
+    itemRow.appendChild(namePart)
+
+    let howManyPart = document.createElement("p")
+    howManyPart.classList.add("how-many-part")
+    howManyPart.innerHTML = `${howMany}x`
+    itemRow.appendChild(howManyPart)
+
+    let unitPricePart = document.createElement("p")
+    unitPricePart.classList.add("unit-price-part")
+    unitPricePart.innerHTML = `@${price}`
+    itemRow.appendChild(unitPricePart)
+
+    let totalPricePart = document.createElement("p")
+    totalPricePart.classList.add("total-price-part")
+    let newPrice = price.replace("$", "")
+    totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`
+    itemRow.appendChild(totalPricePart)
+
+    let removeItem = document.createElement("object")
+    removeItem.classList.add("remove-item")
+    removeItem.data = "assets/images/icon-remove-item.svg"
+    removeItem.type = "image/svg+xml"
+    itemRow.appendChild(removeItem)
+
+    const hrEl = document.createElement("hr")
+    hrEl.classList.add("hrEl")
+    itemRow.appendChild(hrEl)
+  } else {
+    // find item row that its namepart is similar to name and update it
+
+  }
+}
 /*
 // changer of addToCart button style and its content
 function addToCartChanger(addToCart) {
