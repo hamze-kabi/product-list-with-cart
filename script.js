@@ -16,7 +16,7 @@ window.addEventListener("resize", function() {
   manager(jsonData, true)
 })
 
-// has two functions inside itself. detectScreenType() which is self explanatory, and extract data, which extracts text and img elements
+// contains two functions. detectScreenType() which is self explanatory, and extract data, which extracts text and img elements
 // of fetched json
 function manager(jsonData, resize=false) {
   let screenType = detectScreenType()
@@ -78,8 +78,7 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
   img.alt = dataImg;
   item.appendChild(img);
 
-  // creating add to cart div(similar to button, when used button elements button.children or button.childNodes in add eventlisteners
-  // return null)
+  // creating add to cart button
   const addToCart = document.createElement("button");
   addToCart.classList.add("add-to-cart");
   addToCart.id = `add-to-cart${i}`;
@@ -140,7 +139,6 @@ function loadNewImg(i, dataImg) {
   img.alt = dataImg;
 }
 
-
 window.onload = function() {
   // using this code to add hover effect to .add-to-cart (instead of using css), so that it can be easily removed later
   document.querySelectorAll(".add-to-cart").forEach(el => el.classList.add("add-to-cart-hover"))
@@ -148,7 +146,6 @@ window.onload = function() {
   // a function that contains all eventlisteners
   eventListenerFunc();
 }
-
 
 
 function eventListenerFunc() {
@@ -171,6 +168,73 @@ function eventListenerFunc() {
   }))
 };
 
+function addToCartChanger(addToCart) {
+  let addToCartText = addToCart.querySelector(".add-to-cart-text");
+  if (addToCartText.innerHTML === "Add to Cart") {
+    addToCart.classList.remove("add-to-cart-hover")
+    addToCart.classList.add("add-to-cart-clicked");
+    addToCart.querySelector(".icon-add-to-cart").style.display = "none";
+    addToCart.querySelector(".icon-increment-quantity").style.display = "block"
+    addToCart.querySelector(".icon-decrement-quantity").style.display = "block"
+    addToCartText.classList.add("add-to-cart-text-clicked")
+    addToCartText.innerHTML = 0
+    addToCartText.innerHTML = parseInt(addToCartText.innerHTML, 10) + 1
+    cartPanelUpdater(addToCart)
+  };
+}
+
+function iconIncrementChanger(increment) {
+  let addToCartText = increment.previousSibling
+  addToCartText.innerHTML = parseInt(addToCartText.innerHTML, 10) + 1
+  const addToCart = increment.parentElement
+  cartPanelUpdater(addToCart)
+}
+
+function iconDecrementChanger(decrement) {
+  let addToCartText = decrement.nextSibling
+  addToCartText.innerHTML = parseInt(addToCartText.innerHTML, 10) - 1
+  const addToCart = decrement.parentElement
+
+  if (addToCartText.innerHTML == 0) {
+    // reverts .add-to-cart style and content to its original form    
+    addToCartRevert(addToCart, false)
+  }
+  cartPanelUpdater(addToCart, false)
+}
+
+function addToCartRevert(addToCart) {
+  addToCart.classList.add("add-to-cart-hover")
+  addToCart.classList.remove("add-to-cart-clicked");
+  addToCart.querySelector(".icon-add-to-cart").style.display = "block";
+  addToCart.querySelector(".icon-increment-quantity").style.display = "none"
+  addToCart.querySelector(".icon-decrement-quantity").style.display = "none"
+  let addToCartText = addToCart.querySelector(".add-to-cart-text");
+  addToCartText.classList.remove("add-to-cart-text-clicked")
+  addToCartText.innerHTML = String(addToCartText.innerHTML)
+  addToCartText.innerHTML = "Add to Cart"
+}
+
+function cartPanelUpdater(addToCart, add=true) {
+  let cartPanel = document.querySelector(".cart-panel")
+  // updating value of number of h3
+  let wholeQuantity = document.getElementById("quantity-whole")
+  if (add) {
+    wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) + 1
+  } else {
+    wholeQuantity.innerHTML =  parseInt(wholeQuantity.innerHTML, 10) - 1
+  }
+
+  if (parseInt(wholeQuantity.innerHTML, 10) > 0) {
+    cartPanel.querySelector("svg").style.display = "none"
+    document.getElementById("added-items").innerHTML = ""
+  } else {
+    cartPanel.querySelector("svg").style.display = "block"
+      document.getElementById("added-items").innerHTML = "Your added items will appear here"
+  }
+  cartItemRowAdder(addToCart)
+}
+
+/*
 // changer of addToCart button style and its content
 function addToCartChanger(addToCart) {
   let addToCartText = addToCart.querySelector(".add-to-cart-text");
@@ -258,19 +322,26 @@ function cartItemRowAdder(addToCart) {
   // see if there is 'name' in .name-part s
   // if there is that .name-part gets updated
   // console.log(Array.from(addedItems.children).forEach(el => console.log(el.querySelector(".name-part").innerHTML)))
-  if (howMany == "2") {
+  if (parseInt(howMany, 10) > 1) {
     Array.from(addedItems.children).forEach(el => {
       console.log(el.querySelector(".name-part").innerHTML)
         console.log(name)
         if (el.querySelector(".name-part").innerHTML == name) {
-          alert(111)
+          // update the item-row
+          let howManyPart = document.createElement("p")
+          howManyPart.classList.add("how-many-part")
+          howManyPart.innerHTML = `${howMany}x`
+          itemRow.appendChild(howManyPart)
+
+          let totalPricePart = document.createElement("p")
+          totalPricePart.classList.add("total-price-part")
+          let newPrice = price.replace("$", "")
+          totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`
+          itemRow.appendChild(totalPricePart)        
+          return
         }}
     )  
   }
-
-    // if (parseInt(howMany, 10) > 1) {
-  //   Array.from(addedItems.children).forEach(el => console.log(el.querySelectorAll(".name-part")))
-  // }
 
   // parent element of details of added item
   let itemRow = document.createElement("div")
@@ -307,201 +378,5 @@ function cartItemRowAdder(addToCart) {
   const hrEl = document.createElement("hr")
   hrEl.classList.add("hrEl")
   itemRow.appendChild(hrEl)
-
-
-  // checking if the item-row is already present
-  // let li = []
-  // Array.from(document.getElementById("added-items").children).forEach(el => 
-  //   li.push(el.querySelector(".name-part").innerHTML)
-  // )
-  // console.log(li.includes(namePart.innerHTML))
-  // console.log(li)
-  // console.log(namePart.innerText)
-  // console.log(namePart)
-  
-  // let temp3 = temp2.querySelector(".name-part")
-  // console.log(temp2.querySelectorAll(".name-part"))
-  // let a = document.getElementById("added-items")
-  // Array.from(a.children).forEach(el => 
-  //   Array.from(el.querySelectorAll(".name-part")).forEach(ell => console.log(ell.innerHTML))
-  // )
-
-  // console.log((a.children).forEach(el => console.log(el)))
 }
-
-
-
-  // // creating icon add to cart
-  // const iconAddToCart = document.createElement("div");
-  // iconAddToCart.classList.add("icon-add-to-cart");
-  // iconAddToCart.id = `icon-add-to-cart${i}`;
-  // addToCart.appendChild(iconAddToCart);
-
-  // // creating icon decrement quantity
-  // const iconDecrementQuantity = document.createElement("div");
-  // iconDecrementQuantity.classList.add("icon-decrement-quantity");
-  // iconDecrementQuantity.id = `icon-decrement-quantity${i}`;
-  // addToCart.appendChild(iconDecrementQuantity);
-
-  // // creating add to cart p element
-  // const addToCartText = document.createElement("div");
-  // addToCartText.classList.add("add-to-cart-text");
-  // addToCartText.id = `add-to-cart-text${i}`;
-  // addToCartText.innerHTML = "Add to Cart"
-  // addToCart.appendChild(addToCartText);
-
-
-// let wholeQuantityz = document.getElementById("quantity-whole")
-// // let addToCartText = parseInt(addToCart.querySelector(".add-to-cart-text").innerHTML, 10)
-// wholeQuantityz.innerHTML = 2222
-
-
-/*  style change
-*/
-
-
-    // by clicking .add-to-cart, .add-to-cart-clicked gets added to .add-to-cart, display of .icon-add-to-cart changes to none
-    // display of .icon-increment-quantity and .icon-increment-quantity change to block, .add-to-cart-text-clicked gets added to .add-to-cart-text
-    // if howmany = 0, add-to-cart clickable styles get added
-    // if howmany > 0, only increment and decrement clickable
-      // if increment clicked only the how many gets added, styles are already added
-      // if decrement clicked
-        // if howmany > 1, howmany updates
-        // if howmany = 1, howmany converts to "add to cart" and styles get omitted
-
-
-
-/*
-if howmany = 0
-  eventlistener for addtocart
-    when clicked => add styles increase howmany
-
-if howmany = 1
-  eventlistener for increment
-    increase howmany display it
-  eventlistener for decrement
-    decrease howmany revert styles
-  
-if howMany > 1
-  eventlistener for increment
-    increase howmany, display howmany
-  eventlistener for decrement
-    decrease howmany and display it  
-
-
-
-window.onload = function() {
-  let howMany = 0;
-  add-to-cart => clicked:
-    if howmany = 0
-      add new styles, display howmany
-    if howmany > 0
-      do nothing
-
-  increment => clicked:
-    update howmany, still gets displayed
-  
-  decrement => clicked:
-    if howMany > 1
-      update howmany, still gets displayed
-    if howMany = 1
-      update howmany, revert styles
-
-}
-*/
-// document.querySelectorAll(".add-to-cart").forEach(el => el.addEventListener("click", function() {
-//   howMany += 1;
-//   el.previousElementSibling.classList.add("img-clicked");
-//   // console.log(el)
-//   el.classList.add("add-to-cart-clicked")
-//   el.querySelector(".icon-add-to-cart").style.display = "none"
-//   el.querySelector(".icon-increment-quantity").style.display = "block"
-//   el.querySelector(".icon-decrement-quantity").style.display = "block"
-//   el.querySelector(".add-to-cart-text").classList.add("add-to-cart-text-clicked")
-//   el.querySelector(".add-to-cart-text").innerHTML = howMany;
-// }))
-
-
-/*
-        document.querySelector('.container').addEventListener('click', function(event) {
-            if (event.target.classList.contains('parent')) {
-                var child = event.target.querySelector('.child');
-                if (child) {
-                    child.style.display = 'block';
-                }
-            }
-        });
-*/
-
-
-// window.onload = () => {
-//   document.querySelector('.add-to-cart').addEventListener('click', function(event) {
-//     // event.target.querySelector(".icon-add-to-cart").style.display = "none";
-//     console.log(event)
-//   })
-// }
-
-/*
-// ------------------------------------------------------------------------------------------------------------------
-// let clickedStates = {"img": false, "add-to-cart": false, "icon-incremenet": false, "icon-decremenet": false}
-let clickCount = 0;
-
-// images or addtocart when clicked => add box-shadow to image and changes in addtocart
-window.onload = () => {
-  // document.querySelectorAll(".img").forEach(img => 
-  //   img.addEventListener("click", function(event) {imgAddToCartClicked(event, clickCount)}))
-
-  document.querySelectorAll(".add-to-cart").forEach(addToCart => 
-    addToCart.addEventListener("click", function(event) {imgAddToCartClicked(event, clickCount)}))
-
-  // document.querySelectorAll("icon-decrement-quantity").forEach(decrement =>
-  //   decrement.addEventListener("click", bo)
-  // )
-
-  // document.querySelectorAll("icon-decrement-quantity").forEach(decrement =>
-  //   decrement.addEventListener("click", bo)
-  // )
-}
-
-function imgAddToCartClicked(event, clickCount) {
-  clickCount += 1;
-
-  // if < 1 => no effect (if already have effects => omit effects)
-  // if = 1 => add effect & update clickcount
-  // if > 1 => maintain effects & update clickcount
-
-  // let img;
-  // let button;
-  // if (event.currentTarget.tagName == "IMG") {
-  //   img = event.currentTarget
-  //   button = img.nextElementSibling
-  // } else if (event.currentTarget.tagName == "BUTTON") {
-  //   button = event.currentTarget
-  //   img = button.previousElementSibling
-  // }
-  // img.classList.add("img-clicked")
-  // button.classList.add("add-to-cart-clicked")
-  // button.innerHTML = ""
-  // console.log(event)
-  // console.log(button)
-  // document.querySelectorAll(".icon-increment-quantity").forEach(icon => {icon.style.display = "block"});
-  // document.querySelectorAll(".icon-decrement-quantity").forEach(icon => {icon.style.display = "block"});
-  // document.querySelectorAll(".icon-add-to-cart").forEach(icon => {icon.style.display = "none"});
-  // button.classList.add("add-to-cart-clicked", "icon-decrement-quantity", "icon-increment-quantity")
-  // button.innerHTML = clickCount;
-
-}
-
-  // let currentEl = event.currentTarget;
-  // if (currentEl.tagName == "IMG") {
-  //   let siblingEl = currentEl.nextElementSibling;
-  //   currentEl.classList.add("img-clicked")
-  //   siblingEl.classList.add("add-to-cart-clicked", "icon-decrement-quantity", "icon-increment-quantity")
-  //   siblingEl.innerHTML = ""
-  // } else if (currentEl.tagName == "BUTTON") {
-  //   let siblingEl = currentEl.previousElementSibling;
-  //   currentEl.classList.add("add-to-cart-clicked", "icon-decrement-quantity", "icon-increment-quantity")
-  //   currentEl.innerHTML = ""
-  //   siblingEl.classList.add("img-clicked")
-  // }
 */
