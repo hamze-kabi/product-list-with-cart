@@ -283,9 +283,20 @@ function cartItemRowAdder(addToCart, addRow=true) {
     itemRow.appendChild(hrEl)
   } else {
     // find item row that its namepart is similar to name and update it
+    Array.from(addedItems.children).forEach(el => {
+      if (el.querySelector(".name-part").innerHTML == name) {
+        let howManyPart = el.querySelector(".how-many-part")
+        howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) + 1 + "x"
 
+        let totalPricePart = el.querySelector(".total-price-part")
+        let newPrice = price.replace("$", "")
+        totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`    
+      }
+    })
   }
 }
+
+// issues to solve
 /*
 // changer of addToCart button style and its content
 function addToCartChanger(addToCart) {
