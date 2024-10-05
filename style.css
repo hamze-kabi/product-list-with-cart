@@ -135,6 +135,43 @@ h1 {
   color: var(--rose-500);
 }
 
+#order-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  /* display: none; */
+}
+
+#order-total-text {
+  color: hsl(12, 20%, 44%);
+  font-weight: bold;
+}
+
+#order-total-sum-text {
+  font-size:x-large;
+  font-weight: bolder;
+}
+
+#carbon-neutral {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  background-color: var(--rose-100);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+}
+
+#confirm-order {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: var(--red);
+  border: none;
+  padding: 1rem;
+  border-radius: 2rem;
+  color: white;
+  font-weight:bold;
+}
 
 /* .add-to-cart:active > .icon-decrement-quantity, .add-to-cart:active > .icon-increment-quantity{
   display:block;
@@ -262,11 +299,12 @@ h1 {
 
 .remove-item {
   grid-area: remove-item;
+  content: url("assets/images/icon-remove-item.svg");
+  align-self: center;
+  cursor: pointer;  
   border: 1px solid var(--rose-300);
   border-radius: 50%;
   padding: 0.1rem;
-  align-self: center;
-  margin-left: auto;
 }
 
 .hrEl {

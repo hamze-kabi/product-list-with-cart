@@ -147,7 +147,6 @@ window.onload = function() {
   eventListenerFunc();
 }
 
-
 function eventListenerFunc() {
   // click listener for .add-to-cart button
   document.querySelectorAll(".add-to-cart").forEach(addToCart => addToCart.addEventListener("click", function(event) {
@@ -181,6 +180,11 @@ function addToCartChanger(addToCart) {
     addToCartText.innerHTML = parseInt(addToCartText.innerHTML, 10) + 1
     cartPanelUpdater(addToCart)
   };
+
+  // adding click listener to remove icon of item-row, It's written here so that it doesn't run before its creation
+  document.querySelectorAll(".remove-item").forEach(removeItem => removeItem.addEventListener("click", function() {
+    removeItemFunc(removeItem, addToCart)
+  }))
 }
 
 function iconIncrementChanger(increment) {
@@ -274,11 +278,9 @@ function cartItemRowAdder(addToCart) {
   totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`
   itemRow.appendChild(totalPricePart)
 
-  let removeItem = document.createElement("object")
+  let removeItem = document.createElement("div")
   removeItem.classList.add("remove-item")
-  removeItem.data = "assets/images/icon-remove-item.svg"
-  removeItem.type = "image/svg+xml"
-  itemRow.appendChild(removeItem)
+  itemRow.appendChild(removeItem) 
 
   const hrEl = document.createElement("hr")
   hrEl.classList.add("hrEl")
@@ -291,29 +293,26 @@ function cartItemRowUpdater(addToCart, act) {
   const price = (addToCart.nextSibling.nextSibling.nextSibling).innerHTML
   const howMany = (addToCart.querySelector(".add-to-cart-text")).innerHTML
 
-  if (act == "increment") {
-    Array.from(addedItems.children).forEach(el => {
-      if (el.querySelector(".name-part").innerHTML == name) {
-        let howManyPart = el.querySelector(".how-many-part")
-        howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) + 1 + "x"
+  Array.from(addedItems.children).forEach(el => {
+    if (el.querySelector(".name-part").innerHTML == name) {
+      let howManyPart = el.querySelector(".how-many-part")
+      let action = (act == "increment")? 1 : -1;
+      howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) + action + "x"
 
-        let totalPricePart = el.querySelector(".total-price-part")
-        let newPrice = price.replace("$", "")
-        totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`    
+      let totalPricePart = el.querySelector(".total-price-part")
+      let newPrice = price.replace("$", "")
+      totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`
+      if (howManyPart.innerHTML == "0x") {
+        el.remove()
       }
-    })
-  } else if (act == "decrement") {
-    Array.from(addedItems.children).forEach(el => {
-      if (el.querySelector(".name-part").innerHTML == name) {
-        let howManyPart = el.querySelector(".how-many-part")
-        howManyPart.innerHTML = parseInt(howManyPart.innerHTML, 10) - 1 + "x"
+    }
+  })
+}
 
-        let totalPricePart = el.querySelector(".total-price-part")
-        let newPrice = price.replace("$", "")
-        totalPricePart.innerHTML = `$${parseInt(newPrice, 10)*parseInt(howMany, 10)}`            
-      }
-    })
-  }
+function removeItemFunc(removeItem, addToCart) {
+  removeItem.parentElement.remove()
+  addToCartRevert(addToCart)
+  cartPanelUpdater(addToCart)
 }
 
 /*
