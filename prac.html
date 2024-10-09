@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #parent {
+            height: 9rem;
+        }
+    </style>
 </head>
 <body>
-    <div id="a">
-        aaa
-        <div class="b">bbb</div>
-    </div>
-    <script>
-        console.log(document.getElementById("a").querySelector(".b"))
-    </script>
+    <div id="parent">
+        <!-- Dynamically created elements will be added here -->
+      </div>
+      
+      <script>
+        // Add event listener to the parent element
+        document.getElementById('parent').addEventListener('click', function(event) {
+          if (event.target && event.target.matches('.dynamic-element')) {
+            // Handle the event for the dynamically created element
+            console.log('Dynamic element clicked:', event.target);
+          }
+        });
+      
+        // Function to create a new dynamic element
+        function createDynamicElement() {
+          const newElement = document.createElement('div');
+          newElement.className = 'dynamic-element';
+          newElement.textContent = 'I am a dynamic element';
+          document.getElementById('parent').appendChild(newElement);
+        }
+      
+        // Simulate creating a dynamic element after some interaction
+        setTimeout(createDynamicElement, 2000);
+      </script>        
 </body>
 </html>
+
+

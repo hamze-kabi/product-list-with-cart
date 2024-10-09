@@ -139,7 +139,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-  /* display: none; */
+  display: none;
 }
 
 #order-total-text {
@@ -160,6 +160,7 @@ h1 {
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 1rem;
+  display: none;
 }
 
 #confirm-order {
@@ -171,6 +172,7 @@ h1 {
   border-radius: 2rem;
   color: white;
   font-weight:bold;
+  display: none;
 }
 
 /* .add-to-cart:active > .icon-decrement-quantity, .add-to-cart:active > .icon-increment-quantity{

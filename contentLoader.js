@@ -46,7 +46,7 @@ function extractData(jsonData, screenType, resize) {
       const dataImg = jsonData[i].image[`${screenType}`];
       const dataCategory = jsonData[i].category;
       const dataName = jsonData[i].name;
-      const dataPrice = jsonData[i].price;
+      const dataPrice = (jsonData[i].price).toFixed(2);
       // creates text and img elements
       createElement(i, dataImg, dataCategory, dataName, dataPrice)
     }
