@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        #parent {
-            height: 9rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transparent Scrollbar</title>
+  <style>
+    .scrollable {
+      width: 300px;
+      height: 200px;
+      overflow: scroll;
+      scrollbar-width: thin; /* For Firefox */
+      scrollbar-color: transparent transparent; /* For Firefox */
+    }
+
+    /* Hide scrollbar for Chrome, Safari, and Opera */
+    .scrollable::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .scrollable::-webkit-scrollbar-thumb {
+      background-color: transparent;
+      border-radius: 5px;
+    }
+
+    .scrollable::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Show scrollbar thumb on scroll */
+    .scrollable.scrolling::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .scrollable.scrolling {
+      scrollbar-color: rgba(0, 0, 0, 0.5) transparent; /* For Firefox */
+    }
+  </style>
 </head>
 <body>
-    <div id="parent">
-        <!-- Dynamically created elements will be added here -->
-      </div>
-      
-      <script>
-        // Add event listener to the parent element
-        document.getElementById('parent').addEventListener('click', function(event) {
-          if (event.target && event.target.matches('.dynamic-element')) {
-            // Handle the event for the dynamically created element
-            console.log('Dynamic element clicked:', event.target);
-          }
-        });
-      
-        // Function to create a new dynamic element
-        function createDynamicElement() {
-          const newElement = document.createElement('div');
-          newElement.className = 'dynamic-element';
-          newElement.textContent = 'I am a dynamic element';
-          document.getElementById('parent').appendChild(newElement);
-        }
-      
-        // Simulate creating a dynamic element after some interaction
-        setTimeout(createDynamicElement, 2000);
-      </script>        
+  <div class="scrollable">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </div>
+
+  <script>
+    const scrollable = document.querySelector('.scrollable');
+
+    scrollable.addEventListener('scroll', () => {
+      scrollable.classList.add('scrolling');
+      clearTimeout(scrollable.scrollTimeout);
+      scrollable.scrollTimeout = setTimeout(() => {
+        scrollable.classList.remove('scrolling');
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
-
-

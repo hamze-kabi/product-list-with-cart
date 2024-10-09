@@ -49,7 +49,12 @@ window.onload = function() {
     }
     orderTotalCalculator()
   }))
+
+  document.getElementById("confirm-order").addEventListener("click", function() {
+    
+  })
 }
+
 
 function removeItemEventListener(addToCart) {
   const addedItems = document.getElementById("added-items")
@@ -222,7 +227,6 @@ function  CartrowModifier(addToCart, toIncrement=false, toDecrement=false, toRem
     let temp = totalPricePart.innerHTML.replace("$", "")
     let temp2 = unitPricePart.innerHTML.replace("@$", "")
 
-    
     totalPricePart.innerHTML = `$${parseFloat(temp) + parseFloat(temp2)}`
   } else if (toDecrement) {
     let howManyPart = correspondingRow.querySelector(".how-many-part")
@@ -242,13 +246,11 @@ function  CartrowModifier(addToCart, toIncrement=false, toDecrement=false, toRem
   }
 }
 
-
 function orderTotalCalculator() {
   const addedItems = document.getElementById("added-items")
   let sum = 0;
   Array.from(addedItems.children).forEach(el => {
     let totalPrice = +el.querySelector(".total-price-part").innerHTML.replace("$", "")
-    // let totalPrice = parseFloat(el.querySelector(".total-price-part").innerHTML.replace("$", ""))
     sum += totalPrice
   })
   let orderTotalSum = document.getElementById("order-total-sum")

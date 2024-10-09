@@ -133,6 +133,31 @@ h1 {
   font-size: 0.9rem;
   text-align: center;
   color: var(--rose-500);
+  max-height: 40vh;
+  overflow:scroll;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: inherit;
+  /* background: #f1f1f1;  */
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 2rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 #order-total {
@@ -173,8 +198,13 @@ h1 {
   color: white;
   font-weight:bold;
   display: none;
+  transition: background-color 0.3s;
+  cursor: pointer;
 }
 
+#confirm-order:hover {
+  background-color: hsl(14, 86%, 30%)
+}
 /* .add-to-cart:active > .icon-decrement-quantity, .add-to-cart:active > .icon-increment-quantity{
   display:block;
 }
@@ -333,7 +363,7 @@ h1 {
 
 @media screen and (width > 1023px) {
   body {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr) 1.5fr;
     grid-template-areas: 
     "h1 h1 h1 h1"
     "items items items cart-panel"
