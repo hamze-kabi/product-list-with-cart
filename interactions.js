@@ -5,6 +5,7 @@ import { thumbnailLoader } from '/contentLoader.js';
 window.onload = function() {
   document.querySelectorAll(".add-to-cart").forEach(addToCart => {
       addToCart.classList.add("add-to-cart-hover");
+      // events triggered after add-to-cart is clicked
       addToCart.addEventListener("click", function() {
         let addToCartText = addToCart.querySelector(".add-to-cart-text")
         let modifyCartRow;
@@ -83,44 +84,8 @@ window.onload = function() {
     orderTotalSumConfirm.id = "order-total-sum-confirm"
     document.querySelector("#order-total-sum-confirm").parentElement.style.color = "black"
     console.log(document.querySelector("#order-total-sum-confirm").parentElement)
-    // console.log(document.getElementById("confirm-order-cart").querySelector("#order-total-sum"))
-    // console.log(document.getElementById("order-total-sum"))
-    // console.log(cartPanel.querySelector("#order-total-sum"))
-    // console.log(document.querySelector("cart-panel"))
-    // document.querySelector("#added-items-order-total-container #order-total-sum").innerHTML = "fffffffff"
-    // console.log(document.querySelector("#added-items-order-total-container #order-total-sum"))
-    // console.log(document.getElementById(""))
-    // addedItemsConfirm.querySelectorAll(".remove-item").forEach(el => {el.remove()})
   })
 }
-
-// order-total-sum
-
-// let thumbnails = []
-// const itemsChildren = document.getElementById("items").children
-// console.log(Array.from(document.getElementById("items").children).forEach(el => console.log(el.querySelector(".name").innerHTML)))
-// document.getElementById("items").children.forEach(el => 
-//   console.log(el.querySelector(".name").innerHTML))
-// Array.from(document.getElementById("added-items-confirm").children).forEach(el => 
-//   function() {
-//     const thumbnail = document.createElement("img")
-//     thumbnail.classList.add("thumbnail");
-//     thumbnail.id = `thumbnail${i}`;
-
-    // thumbnail.src = dataThumbnail;
-    // thumbnail.alt = dataThumbnail;
-//     item.appendChild(thumbnail);
-
-//   }
-// )
-
-// confirmOrderCart.style.display = "flex"
-// addedItemsList.innerHTML = document.getElementById("added-items").innerHTML
-// addedItemsList.querySelectorAll(".remove-item").forEach(el => {el.remove()})
-// addedItemsList.querySelectorAll(".item-row").forEach(el => el.classList.add(""))
-// confirmOrderCart.classList.add(".cart-panel")
-
-
 
 function removeItemEventListener(addToCart) {
   const addedItems = document.getElementById("added-items")
@@ -227,12 +192,6 @@ function yourCartNumberChanger() {
     number += howManyPart
   })  
   yourCartQuantity.innerHTML = number
-  // let yourCartQuantity = document.getElementById("quantity-whole")
-  // if (add) {
-  //   yourCartQuantity.innerHTML =  parseFloat(yourCartQuantity.innerHTML) + 1        
-  //   return
-  // }
-  // yourCartQuantity.innerHTML =  parseFloat(yourCartQuantity.innerHTML) - 1
 }
 
 function  CartrowModifier(addToCart, toIncrement=false, toDecrement=false, toRemove=false) {
