@@ -16,6 +16,8 @@ window.addEventListener("resize", function() {
   manager(jsonData, true)
 })
 
+
+// let thumbnailAddresses = {}
 // contains two functions. detectScreenType() which is self explanatory, and extract data, which extracts text and img elements
 // of fetched json
 function manager(jsonData, resize=false) {
@@ -35,6 +37,7 @@ function detectScreenType() {
   };
 };
 
+
 // when the page is loaded for the first time, this function extracts the text data for their related elements(to be created in next steps),
 // and image urls of the detected screen type.
 // when the page is already loaded but has been resized to the amount that the screen type is changed, this function only extracts 
@@ -44,9 +47,12 @@ function extractData(jsonData, screenType, resize) {
   if (!resize) {
     for (let i=0; i < jsonData.length; i++) {
       const dataImg = jsonData[i].image[`${screenType}`];
+      // const dataThumbnail = jsonData[i].image.thumbnail;
       const dataCategory = jsonData[i].category;
       const dataName = jsonData[i].name;
       const dataPrice = (jsonData[i].price).toFixed(2);
+      
+      // thumbnailAddresses[dataName] = dataThumbnail
       // creates text and img elements
       createElement(i, dataImg, dataCategory, dataName, dataPrice)
     }
@@ -77,6 +83,13 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
   img.src = dataImg;
   img.alt = dataImg;
   item.appendChild(img);
+
+  // create thumbnails
+  // const thumbnail = document.createElement("img");
+  // thumbnail.classList.add("thumbnail");
+  // thumbnail.id = `thumbnail${i}`;
+  // thumbnail.src = dataThumbnail;
+  // thumbnail.alt = dataThumbnail;
 
   // creating add to cart button
   const addToCart = document.createElement("button");
@@ -138,3 +151,52 @@ function loadNewImg(i, dataImg) {
   img.src = dataImg;
   img.alt = dataImg;
 }
+
+export function thumbnailLoader(name) {
+  const item = jsonData.find(el => el.name === name);
+  return item ? item.image.thumbnail : undefined;
+}
+
+// export function thumbnailLoader(name) {
+//   Array.from(jsonData).forEach(el => {
+//     if (el.name == name) {
+//       return el.image.thumbnail
+//     }})
+// }
+/*
+export function thumbnailLoader(name) {
+  const checkData = () => {
+    if (jsonData !== null) {
+      Array.from(jsonData).forEach(el => {
+        if (el.name == name) {
+          return el.image.thumbnail
+        }
+      })
+    } else {
+      setTimeout(checkData, 100); // Check again after 100ms
+    }
+  };
+  checkData();
+}
+*/
+/*
+function useJsonData(callback) {
+  const checkData = () => {
+    if (jsonData !== null) {
+      callback(jsonData);
+    } else {
+      setTimeout(checkData, 100); // Check again after 100ms
+    }
+  };
+  checkData();
+}
+
+// Example usage
+useJsonData((data) => {
+  // Array.from(data).forEach(el => console.log(el))
+});
+
+function thumbnailLoader() {
+  // console.log(111)
+}
+*/

@@ -33,12 +33,26 @@
     </div>
     <button id="confirm-order" type="submit">Confirm Order</button>
   </section>
+  <div id="dark-overlay" class="dark-overlay"></div>
+  <div id="confirm-order-cart" class="confirm-order-cart">
+    <object data="assets/images/icon-order-confirmed.svg" type="image/svg+xml"></object>
+    <h1>Order Confirmed</h1>
+    <p>we hope you enjoy your food!</p>
+    <div class="added-items-order-total-container" id="added-items-order-total-container">
+      <div class="added-items-confirm" id="added-items-confirm"></div>
+      <div id="order-total">
+        <p id="order-total-text">Order Total</p>
+        <p id="order-total-sum-text">$<span id="order-total-sum"></span></p>
+      </div>
+    </div>
+    <button id="confirm-order" type="submit">Confirm Order</button>
+  </div> 
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
     Coded by <a href="https://github.com/hamze-kabi">Hamze Kabi</a>.
   </div>
-  <script src="contentLoader.js"></script>
-  <script src="interactions.js" defer></script>
+  <script type="module" src="contentLoader.js"></script>
+  <script type="module" src="interactions.js" defer></script>
 </body>
 </html>
 

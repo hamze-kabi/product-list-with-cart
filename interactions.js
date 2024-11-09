@@ -1,5 +1,7 @@
 "use strict";
 
+import { thumbnailLoader } from '/contentLoader.js';
+
 window.onload = function() {
   document.querySelectorAll(".add-to-cart").forEach(addToCart => {
       addToCart.classList.add("add-to-cart-hover");
@@ -51,9 +53,73 @@ window.onload = function() {
   }))
 
   document.getElementById("confirm-order").addEventListener("click", function() {
-    
+    const darkOverlay = document.getElementById("dark-overlay")
+    const confirmOrderCart = document.getElementById("confirm-order-cart")
+    const addedItemsList = document.getElementById("added-items-list")
+    const cartPanel = document.querySelector(".cart-panel")
+    const addedItemsConfirm = document.getElementById("added-items-confirm")
+
+    darkOverlay.style.display = "block"
+    confirmOrderCart.style.zIndex = "1"
+    confirmOrderCart.style.opacity = "1"
+    addedItemsConfirm.innerHTML = document.getElementById("added-items").innerHTML
+    addedItemsConfirm.querySelectorAll(".remove-item").forEach(el => {el.remove()})
+    // Array.from(addedItemsConfirm.children).forEach(el => console.log(el.querySelector(".name-part").innerHTML))
+    addedItemsConfirm.querySelectorAll(".name-part").forEach(el => {
+      let thumbnailAddress = thumbnailLoader(el.innerHTML)
+
+      // create thumbnail
+      const thumbnail = document.createElement("img");
+      thumbnail.src = thumbnailAddress;
+      thumbnail.alt = thumbnailAddress;
+      thumbnail.classList.add("thumbnail");
+      el.parentElement.appendChild(thumbnail);
+
+      // el.parentElement.classList.add("")
+      console.log(el.parentElement)
+    })
+    const orderTotalSumConfirm = document.getElementById("confirm-order-cart").querySelector("#order-total-sum")
+    orderTotalSumConfirm.innerHTML = cartPanel.querySelector("#order-total-sum").innerHTML
+    orderTotalSumConfirm.id = "order-total-sum-confirm"
+    document.querySelector("#order-total-sum-confirm").parentElement.style.color = "black"
+    console.log(document.querySelector("#order-total-sum-confirm").parentElement)
+    // console.log(document.getElementById("confirm-order-cart").querySelector("#order-total-sum"))
+    // console.log(document.getElementById("order-total-sum"))
+    // console.log(cartPanel.querySelector("#order-total-sum"))
+    // console.log(document.querySelector("cart-panel"))
+    // document.querySelector("#added-items-order-total-container #order-total-sum").innerHTML = "fffffffff"
+    // console.log(document.querySelector("#added-items-order-total-container #order-total-sum"))
+    // console.log(document.getElementById(""))
+    // addedItemsConfirm.querySelectorAll(".remove-item").forEach(el => {el.remove()})
   })
 }
+
+// order-total-sum
+
+// let thumbnails = []
+// const itemsChildren = document.getElementById("items").children
+// console.log(Array.from(document.getElementById("items").children).forEach(el => console.log(el.querySelector(".name").innerHTML)))
+// document.getElementById("items").children.forEach(el => 
+//   console.log(el.querySelector(".name").innerHTML))
+// Array.from(document.getElementById("added-items-confirm").children).forEach(el => 
+//   function() {
+//     const thumbnail = document.createElement("img")
+//     thumbnail.classList.add("thumbnail");
+//     thumbnail.id = `thumbnail${i}`;
+
+    // thumbnail.src = dataThumbnail;
+    // thumbnail.alt = dataThumbnail;
+//     item.appendChild(thumbnail);
+
+//   }
+// )
+
+// confirmOrderCart.style.display = "flex"
+// addedItemsList.innerHTML = document.getElementById("added-items").innerHTML
+// addedItemsList.querySelectorAll(".remove-item").forEach(el => {el.remove()})
+// addedItemsList.querySelectorAll(".item-row").forEach(el => el.classList.add(""))
+// confirmOrderCart.classList.add(".cart-panel")
+
 
 
 function removeItemEventListener(addToCart) {
