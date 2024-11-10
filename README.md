@@ -1,4 +1,4 @@
-# Frontend Mentor - Meet landing page solution
+# Frontend Mentor - product list with cart page solution
 
 This is a solution to the [Meet landing page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-list-with-cart-5MmqLVAp_d). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
