@@ -1,11 +1,11 @@
 "use strict";
-
-import { thumbnailLoader } from '/contentLoader.js';
+console.log(Date.now(),  "interactions.js")
 
 window.onload = function() {
   document.querySelectorAll(".add-to-cart").forEach(addToCart => {
       addToCart.classList.add("add-to-cart-hover");
       addToCart.addEventListener("click", function() {
+        console.log(Date.now(),  "addToCart eventListener added")
         let addToCartText = addToCart.querySelector(".add-to-cart-text")
         let modifyCartRow;
         if (addToCartText.innerHTML == "Add to Cart") {
@@ -28,6 +28,7 @@ window.onload = function() {
 
   // click listener for .icon-increment-quantity
   document.querySelectorAll(".icon-increment-quantity").forEach(increment => increment.addEventListener("click", function(event) {
+    console.log(Date.now(),  ".icon-increment-quantity eventListener added")
     event.stopPropagation()
     const addToCart = increment.parentElement
     
@@ -40,6 +41,7 @@ window.onload = function() {
 
   // click listener for .icon-decrement-quantity
   document.querySelectorAll(".icon-decrement-quantity").forEach(decrement => decrement.addEventListener("click", function(event) {
+    console.log(Date.now(),  ".icon-decrement-quantity eventListener added")
     event.stopPropagation()
     const addToCart = decrement.parentElement
     let toDecrement = true;
@@ -53,6 +55,7 @@ window.onload = function() {
   }))
 
   document.getElementById("confirm-order").addEventListener("click", function() {
+    console.log(Date.now(),  "#confirm-order eventListener added")
     const darkOverlay = document.getElementById("dark-overlay")
     const confirmOrderCart = document.getElementById("confirm-order-cart")
     const addedItemsList = document.getElementById("added-items-list")
@@ -64,9 +67,9 @@ window.onload = function() {
     confirmOrderCart.style.opacity = "1"
     addedItemsConfirm.innerHTML = document.getElementById("added-items").innerHTML
     addedItemsConfirm.querySelectorAll(".remove-item").forEach(el => {el.remove()})
-    // Array.from(addedItemsConfirm.children).forEach(el => console.log(el.querySelector(".name-part").innerHTML))
+    // Array.from(addedItemsConfirm.children).forEach(el => console.log(Date.now(),  el.querySelector(".name-part").innerHTML))
     addedItemsConfirm.querySelectorAll(".name-part").forEach(el => {
-      let thumbnailAddress = thumbnailLoader(el.innerHTML)
+      let thumbnailAddress = window.thumbnailLoader(el.innerHTML)
 
       // create thumbnail
       const thumbnail = document.createElement("img");
@@ -76,17 +79,18 @@ window.onload = function() {
       el.parentElement.appendChild(thumbnail);
 
       // el.parentElement.classList.add("")
-      console.log(el.parentElement)
+      console.log(Date.now(),  el.parentElement)
     })
     const orderTotalSumConfirm = document.getElementById("confirm-order-cart").querySelector("#order-total-sum")
     orderTotalSumConfirm.innerHTML = cartPanel.querySelector("#order-total-sum").innerHTML
     orderTotalSumConfirm.id = "order-total-sum-confirm"
     document.querySelector("#order-total-sum-confirm").parentElement.style.color = "black"
-    console.log(document.querySelector("#order-total-sum-confirm").parentElement)
+    console.log(Date.now(),  document.querySelector("#order-total-sum-confirm").parentElement)
   })
 }
 
 function removeItemEventListener(addToCart) {
+  console.log(Date.now(),  "removeItemEventListener function ran")
   const addedItems = document.getElementById("added-items")
   const name = (addToCart.nextSibling.nextSibling).innerHTML
   let correspondingRow;
@@ -111,6 +115,7 @@ function removeItemEventListener(addToCart) {
 
 
 function addToCartChanger(addToCart, toIncrement=false, toDecrement=false, toRemove=false) {
+  console.log(Date.now(),  "addToCartChanger function ran")  
   let addToCartText = addToCart.querySelector(".add-to-cart-text")
   // making sure a clicked addtocart cant be clicked again
   if (addToCartText.innerHTML == "Add to Cart") {
@@ -149,6 +154,7 @@ function addToCartChanger(addToCart, toIncrement=false, toDecrement=false, toRem
 }
 
 function imageStyleChanger(addToCart, removeStyle=false) {
+  console.log(Date.now(),  "imageStyleChanger function ran")
   const img = addToCart.previousElementSibling
   if (removeStyle) {
     img.classList.remove("img-clicked")    
@@ -159,6 +165,7 @@ function imageStyleChanger(addToCart, removeStyle=false) {
 
 // if upgrade = true, svg and "Your added items will appear here" get deleted for new elements
 function yourCartpanelToggler(upgrade=true) {
+  console.log(Date.now(),  "yourCartpanelToggler function ran")
   const cartPanel = document.querySelector(".cart-panel")
   const svg = cartPanel.querySelector("svg")
   const addedItems = document.getElementById("added-items")
@@ -183,6 +190,7 @@ function yourCartpanelToggler(upgrade=true) {
 
 // changer the number inside paranthesis of your cart main header, if add = true, the number gets incremented by 1, else decremented by 1
 function yourCartNumberChanger() {
+  console.log(Date.now(),  "yourCartNumberChanger function ran")
   let yourCartQuantity = document.getElementById("quantity-whole")
   let addedItems = document.getElementById("added-items")
   let number = 0
@@ -193,7 +201,8 @@ function yourCartNumberChanger() {
   yourCartQuantity.innerHTML = number
 }
 
-function  CartrowModifier(addToCart, toIncrement=false, toDecrement=false, toRemove=false) {
+function CartrowModifier(addToCart, toIncrement=false, toDecrement=false, toRemove=false) {
+  console.log(Date.now(),  "CartrowModifier function ran")
   let addedItems = document.getElementById("added-items")
   const name = (addToCart.nextSibling.nextSibling).innerHTML
   const price = (addToCart.nextSibling.nextSibling.nextSibling).innerHTML
@@ -271,6 +280,7 @@ function  CartrowModifier(addToCart, toIncrement=false, toDecrement=false, toRem
 }
 
 function orderTotalCalculator() {
+  console.log(Date.now(),  "orderTotalCalculator function ran")
   const addedItems = document.getElementById("added-items")
   let sum = 0;
   Array.from(addedItems.children).forEach(el => {

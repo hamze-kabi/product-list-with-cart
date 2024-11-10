@@ -7,12 +7,14 @@ fetch("data.json")
   .then(response => response.json())
   .then(data => {
     jsonData = data
+    console.log(Date.now(), "contentLoader.js", "data fetched")
     manager(jsonData)
   })
   .catch(error => console.error('Error fetching data:', error));
 
 // detects resize of screen, calls manager function, manager function replaces old images with new ones if screen type is changed
 window.addEventListener("resize", function() {
+  console.log(Date.now(), "contentLoader.js", "window resized")
   manager(jsonData, true)
 })
 
@@ -21,12 +23,14 @@ window.addEventListener("resize", function() {
 // contains two functions. detectScreenType() which is self explanatory, and extract data, which extracts text and img elements
 // of fetched json
 function manager(jsonData, resize=false) {
+  console.log(Date.now(), "contentLoader.js", "manager function ran")
   let screenType = detectScreenType()
   extractData(jsonData, screenType, resize)
 };
 
 // based on screen width returns screen type
 function detectScreenType() {
+  console.log(Date.now(), "contentLoader.js", "detectScreenType function ran")
   let screenWidth = window.innerWidth;
   if (screenWidth < 650) {
     return "mobile"
@@ -43,6 +47,7 @@ function detectScreenType() {
 // when the page is already loaded but has been resized to the amount that the screen type is changed, this function only extracts 
 // the new image urls for the new screen type
 function extractData(jsonData, screenType, resize) {
+  console.log(Date.now(), "contentLoader.js", "extractData function ran")
   // page is loaded for the first time
   if (!resize) {
     for (let i=0; i < jsonData.length; i++) {
@@ -68,7 +73,7 @@ function extractData(jsonData, screenType, resize) {
 
 // creates text and img elements
 function createElement(i, dataImg, dataCategory, dataName, dataPrice) {  
-
+  console.log(Date.now(), "contentLoader.js", "createElement function ran")
   // items contains item - each item is a dessert
   const items = document.getElementById("items")
   const item = document.createElement("item");
@@ -139,12 +144,18 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
 
 // replaces new images with the old ones, result will be seen only if the screen type is changed
 function loadNewImg(i, dataImg) {
+  console.log(Date.now(), "contentLoader.js", "loadNewImg function ran")
   const img = document.getElementById(`img${i}`)
   img.src = dataImg;
   img.alt = dataImg;
 }
 
-export function thumbnailLoader(name) {
+function thumbnailLoader(name) {
+  console.log(Date.now(), "contentLoader.js", "thumbnailLoader export function ran")  
   const item = jsonData.find(el => el.name === name);
   return item ? item.image.thumbnail : undefined;
 }
+
+window.thumbnailLoader = thumbnailLoader
+
+console.log(Date.now(), "contentLoader.js", "file fin")
