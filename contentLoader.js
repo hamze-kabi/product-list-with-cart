@@ -52,7 +52,6 @@ function extractData(jsonData, screenType, resize) {
       const dataName = jsonData[i].name;
       const dataPrice = (jsonData[i].price).toFixed(2);
       
-      // thumbnailAddresses[dataName] = dataThumbnail
       // creates text and img elements
       createElement(i, dataImg, dataCategory, dataName, dataPrice)
     }
@@ -83,13 +82,6 @@ function createElement(i, dataImg, dataCategory, dataName, dataPrice) {
   img.src = dataImg;
   img.alt = dataImg;
   item.appendChild(img);
-
-  // create thumbnails
-  // const thumbnail = document.createElement("img");
-  // thumbnail.classList.add("thumbnail");
-  // thumbnail.id = `thumbnail${i}`;
-  // thumbnail.src = dataThumbnail;
-  // thumbnail.alt = dataThumbnail;
 
   // creating add to cart button
   const addToCart = document.createElement("button");
@@ -156,47 +148,3 @@ export function thumbnailLoader(name) {
   const item = jsonData.find(el => el.name === name);
   return item ? item.image.thumbnail : undefined;
 }
-
-// export function thumbnailLoader(name) {
-//   Array.from(jsonData).forEach(el => {
-//     if (el.name == name) {
-//       return el.image.thumbnail
-//     }})
-// }
-/*
-export function thumbnailLoader(name) {
-  const checkData = () => {
-    if (jsonData !== null) {
-      Array.from(jsonData).forEach(el => {
-        if (el.name == name) {
-          return el.image.thumbnail
-        }
-      })
-    } else {
-      setTimeout(checkData, 100); // Check again after 100ms
-    }
-  };
-  checkData();
-}
-*/
-/*
-function useJsonData(callback) {
-  const checkData = () => {
-    if (jsonData !== null) {
-      callback(jsonData);
-    } else {
-      setTimeout(checkData, 100); // Check again after 100ms
-    }
-  };
-  checkData();
-}
-
-// Example usage
-useJsonData((data) => {
-  // Array.from(data).forEach(el => console.log(el))
-});
-
-function thumbnailLoader() {
-  // console.log(111)
-}
-*/
