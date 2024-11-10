@@ -15,12 +15,12 @@ This is a solution to the [Meet landing page challenge on Frontend Mentor](https
 
 ### Screenshot
 
-![Screenshots](screenshots\screenshots.png)
+![Screenshots](screenshots\screenshots.jpg)
 
 ### Links
 
-- Solution URL: [https://github.com/HamzeKabi/meet-landing-page](https://github.com/HamzeKabi/meet-landing-page)
-- Live Site URL: [https://hamzekabi.github.io/meet-landing-page/](https://hamzekabi.github.io/meet-landing-page/)
+- Solution URL: [https://github.com/hamze-kabi/product-list-with-cart](https://github.com/hamze-kabi/product-list-with-cart)
+- Live Site URL: [https://hamze-kabi.github.io/product-list-with-cart/](https://hamze-kabi.github.io/product-list-with-cart/)
 
 ## My process
 
@@ -31,8 +31,8 @@ This is a solution to the [Meet landing page challenge on Frontend Mentor](https
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
+- Load contents from json
 
 ## Author
 
-- Github - [https://github.com/HamzeKabi](https://github.com/HamzeKabi)
-- Frontend Mentor - [@HamzeKabi](https://www.frontendmentor.io/profile/HamzeKabi)
+- Github - [https://github.com/hamze-kabi](https://github.com/hamze-kabi)
