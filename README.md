@@ -15,7 +15,7 @@ This is a solution to the [Meet landing page challenge on Frontend Mentor](https
 
 ### Screenshot
 
-![Screenshots](screenshots\screenshots.jpg)
+![screenshots\screenshots.jpg](screenshots\screenshots.jpg)
 
 ### Links
 
