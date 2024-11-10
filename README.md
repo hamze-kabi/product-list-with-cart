@@ -15,7 +15,7 @@ This is a solution to the [Meet landing page challenge on Frontend Mentor](https
 
 ### Screenshot
 
-![screenshots\screenshots.jpg](screenshots\screenshots.jpg)
+![https://github.com/hamze-kabi/product-list-with-cart/blob/main/screenshots/screenshots.jpg](https://github.com/hamze-kabi/product-list-with-cart/blob/main/screenshots/screenshots.jpg)
 
 ### Links
 
