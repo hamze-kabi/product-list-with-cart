@@ -37,6 +37,59 @@ body {
   padding: 1rem;
 }
 
+.dark-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: none;
+}
+
+#confirm-order-cart {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background-color: var(--rose-50);
+  width: 37vw;
+  max-width: 90vw;
+  /* display: none; */
+  z-index: -3;
+  opacity: 0;
+}
+
+#confirm-order-cart object {
+  width: 2.5rem;
+  margin-top: 2rem;
+}
+
+#confirm-order-cart p {
+  /* margin-top: -1rem; */
+  color: var(--rose-400);
+}
+
+/* #added-items-order-total-container {
+  padding: 2rem;
+  background-color: hsl(14, 25%, 90%);
+  margin: 0rem 1rem 1rem 1rem;
+} */
+
+/* #added-items-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+} */
+
 h1 {
   font-family: "redhat";
   font-weight: bold;
@@ -119,6 +172,7 @@ h1 {
   scale: 0.9;
 }
 
+
 .cart-panel svg {
   margin: auto;
 }
@@ -166,6 +220,7 @@ h1 {
   /* display: none; */
 }
 
+
 #order-total-text {
   color: hsl(12, 20%, 44%);
   font-weight: bold;
@@ -201,6 +256,20 @@ h1 {
   cursor: pointer;
 }
 
+/* #confirm-order-scnd {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: var(--red);
+  border: none;
+  padding: 1rem;
+  border-radius: 2rem;
+  color: white;
+  font-weight:bold;
+  display: none;
+  transition: background-color 0.3s;
+  cursor: pointer;
+} */
+
 #confirm-order:hover {
   background-color: hsl(14, 86%, 30%)
 }
@@ -223,6 +292,7 @@ h1 {
       "hrEl hrEl hrEl hrEl";
   grid-template-columns: repeat(3, 2fr) 1fr;
   align-items: center;
+  /* padding: 1rem; */
 }
 
 #added-items-confirm .item-row .name-part {
@@ -241,6 +311,8 @@ h1 {
   grid-area: thumbnail;
   scale: 0.7;
 }
+
+
 
 .category {
   color: var(--rose-300);
@@ -289,6 +361,10 @@ h1 {
   grid-template-columns: repeat(3, 1fr) 0.5fr;
 }
 
+/* #added-items-confirm .item-row {
+  row-gap: 1.2rem;
+} */
+
 .name-part {
   grid-area: name-part;
   color: black;
@@ -308,11 +384,19 @@ h1 {
   text-align: left;
 }
 
+/* #added-items-confirm .item-row .unit-price-part {
+  color: black;
+} */
+
 .total-price-part {
   grid-area: total-price-part;
   font-weight: bold;
   text-align: left;
 }
+
+/* #added-items-confirm .item-row .total-price-part {
+  color: black;
+} */
 
 .remove-item {
   grid-area: remove-item;
@@ -329,45 +413,10 @@ h1 {
   margin: 0.3rem 0 0.3rem 0;
 }
 
-.dark-overlay {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  background-color: rgba(0, 0, 0, 0.6);
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  display: none;
-}
-
-#confirm-order-cart {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem;
-  border-radius: 2rem;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  background-color: var(--rose-50);
-  width: 37vw;
-  max-width: 90vw;
-  z-index: -3;
-  opacity: 0;
-}
-
-#confirm-order-cart object {
-  width: 2.5rem;
-  margin-top: 2rem;
-}
-
-#confirm-order-cart p {
-  color: var(--rose-400);
-}
-
+/* #added-items-confirm .item-row .hrEl {
+  margin-top: -0.8rem;
+  height: 0.1rem;
+} */
 
 .attribution {
   grid-area: attribution;
